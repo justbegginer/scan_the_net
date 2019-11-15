@@ -13,11 +13,11 @@ def easy_scan(ip):
 #TODO hard version
 def scan(ip):
     arp_request = scapy.ARP(pdst = ip) # get arp request. pdst - ip
-    print(arp_request.summary()) #print Arp request
-    print(arp_request.show())#show args
+    #print(arp_request.summary()) #print Arp request
+    #print(arp_request.show())#show args
     broadcast = scapy.Ether(dst = "ff:ff:ff:ff:ff:ff") #make broadcast req
-    print(broadcast.summary())
-    print(broadcast.show())
+    #print(broadcast.summary())
+    #print(broadcast.show())
     broadcast_req = broadcast/arp_request# / means concatenation
     #scapy.ls(scapy.Ether) #information about current class
 
