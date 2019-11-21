@@ -18,8 +18,8 @@ def scan(ip):
     broadcast = scapy.Ether(dst = "ff:ff:ff:ff:ff:ff") #make broadcast req
     broadcast_request = broadcast/arp_request# / means concatenation
     #scapy.ls(scapy.Ether) #information about current class
-    answered = scapy.srp(broadcast_request ,timeout = 1)[0] # the second element of array is a unanswered list
-    #print(answered.summary())
+    answered = scapy.srp(broadcast_request ,timeout = 1 ,verbose = False)[0] # the second element of array is a unanswered list
+    #print(scapy.ls(scapy.srp))
     return parse_resp(answered)
 
 def parse_resp(response):
@@ -31,8 +31,17 @@ def parse_resp(response):
         book[ip] = mac_address
     return book
 
-#scan("192.168.0.1")
-print(scan("192.168.0.1/24"))# /24 -> that part doesn't work correct like ARP who has ?? says ??
+def print_info(book):
+    shift = 15
+    print(f"Mac{shift *' '}Ip")
+    for i in book:
+        shift_for_current_line = shift-len(i)+3
+        print(40*"-")# shift + len("Mac") + len("Ip")+20(extra)
+        print(f"{i}{shift_for_current_line * ' '}{book[i]}")
 
+
+#scan("192.168.0.1")
+book_of_ips_mac = scan("192.168.0.1/24")# /24 -> that part doesn't work correct like ARP who has ?? says ??
+print_info(book_of_ips_mac)
 #for i in range(1 , 256):
 #    scan("192.168.0."+str(i))
